@@ -30,7 +30,8 @@ in the browser, or in a VCF file, would have the coordinate `CP022321.1:1`.
 
 That means that if you add an entry, and you are looking at a VCF file which has just the first
 position, then you'll need to subtract 1 from that position. The end position would actually be
-the value that is displayed in the VCF file. If you have questions, ask.
+the value that is displayed in the VCF file. If you have questions, ask. The same goes for the
+browser -- make sure you subtract 1 from the coordinates that appear in the browser.
 
 The file is currently sorted, so please find, in the file, where your new addition should go. The
 best way to add your new line is to copy the line above and paste it in, making edits as needed.
