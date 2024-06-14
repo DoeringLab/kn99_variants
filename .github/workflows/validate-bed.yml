@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - kn99_exclude_regions.bed
+      - .github/*
 
 jobs:
   validate_and_index:
