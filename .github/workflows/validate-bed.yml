@@ -1,0 +1,44 @@
+name: Validate and Index BED file
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - kn99_exclude_regions.bed
+
+jobs:
+  validate_and_index:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas
+
+    - name: Validate BED file
+      run: python validate_bed.py file.bed
+
+    - name: Run GATK4 IndexFeatureFile
+      run: |
+        docker run --rm -v ${{ github.workspace }}:/data quay.io/biocontainers/gatk4:4.5.0.0--py36hdfd78af_0 \
+        gatk IndexFeatureFile -I /data/file.bed
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add file.bed.idx
+        git commit -m "Add BED file index"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
