@@ -26,12 +26,12 @@ jobs:
         pip install pandas
 
     - name: Validate BED file
-      run: python validate_bed.py file.bed
+      run: python validate_bed.py kn99_exclude_regions.bed
 
     - name: Run GATK4 IndexFeatureFile
       run: |
         docker run --rm -v ${{ github.workspace }}:/data quay.io/biocontainers/gatk4:4.5.0.0--py36hdfd78af_0 \
-        gatk IndexFeatureFile -I /data/file.bed
+        gatk IndexFeatureFile -I /data/kn99_exclude_regions.bed
 
     - name: Commit and push changes
       run: |
